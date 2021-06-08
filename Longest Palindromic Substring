@@ -1,0 +1,20 @@
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        self.max_len = 0
+        self.start = 0
+        for i in range(len(s)):
+            self.ExpandFromCenter(s,i,i)
+            self.ExpandFromCenter(s,i,i+1)
+        return s[self.start:self.start+self.max_len]
+    
+    def ExpandFromCenter(self, s, left, right):
+        while left >= 0 and right < len(s) and s[left] ==s[right]:
+            left-=1
+            right+=1
+        if self.max_len <right-left-1:
+            self.max_len = right-left-1
+            self.start = left+1
