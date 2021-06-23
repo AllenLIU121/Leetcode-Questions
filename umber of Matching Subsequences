@@ -1,0 +1,24 @@
+class Solution(object):
+    def numMatchingSubseq(self, s, words):
+        """
+        :type s: str
+        :type words: List[str]
+        :rtype: int
+        """
+        ans = 0
+        seq = [[]for _ in range(26)]
+        for word in words:
+            it = iter(word)
+            seq[ord(next(it))-ord('a')].append(it)
+        for i in s:
+            j = seq[ord(i)-ord('a')]
+            seq[ord(i)-ord('a')] = []
+        
+            while j:
+                it = j.pop()
+                nxt = next(it, None)
+                if nxt:
+                    seq[ord(nxt)-ord('a')].append(it)
+                else:
+                    ans += 1
+        return ans
