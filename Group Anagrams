@@ -1,0 +1,30 @@
+# Sorted()
+class Solution(object):
+    def groupAnagrams(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: List[List[str]]
+        """
+        dic = collections.defaultdict(list)
+
+        for i in strs:
+            key = ''.join(sorted(i))
+            dic[key].append(i)
+            
+        return list(dic.values())
+
+# Counts
+class Solution(object):
+    def groupAnagrams(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: List[List[str]]
+        """
+        dic = collections.defaultdict(list)
+        
+        for i in strs:
+            counts = [0]*26
+            for ch in i:
+                counts[ord(ch)-ord('a')] += 1
+            dic[tuple(counts)].append(i)
+        return list(dic.values())
