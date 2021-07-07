@@ -1,0 +1,43 @@
+# DP
+class Solution(object):
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        pre = 0
+        maxAns = nums[0]
+        
+        for n in nums:
+            pre = max(pre+n, n)
+            maxAns = max(pre,maxAns)
+        
+        return maxAns
+
+# Divide and Conquer
+class Solution(object):
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        n = len(nums)
+        if n==1:
+            return nums[0]
+        else:
+            max_left = self.maxSubArray(nums[0:n//2])
+            max_right = self.maxSubArray(nums[n//2:n])
+        
+        max_l = nums[n//2-1]
+        tmp = 0
+        for i in range(n//2-1,-1,-1):
+            tmp += nums[i]
+            max_l = max(tmp, max_l)
+        
+        max_r = nums[n//2]
+        tmp = 0
+        for j in range(n//2,n):
+            tmp += nums[j]
+            max_r = max(tmp, max_r)
+            
+        return max(max_left,max_right, max_l+max_r)
