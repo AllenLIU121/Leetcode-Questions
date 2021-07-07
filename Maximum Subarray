@@ -28,16 +28,13 @@ class Solution(object):
             max_left = self.maxSubArray(nums[0:n//2])
             max_right = self.maxSubArray(nums[n//2:n])
         
-        max_l = nums[n//2-1]
-        tmp = 0
-        for i in range(n//2-1,-1,-1):
-            tmp += nums[i]
-            max_l = max(tmp, max_l)
-        
-        max_r = nums[n//2]
-        tmp = 0
-        for j in range(n//2,n):
-            tmp += nums[j]
-            max_r = max(tmp, max_r)
+        tmp = nums[0]
+        max_ = tmp
+        for i in range(1,n):
+            if tmp > 0:
+                tmp += nums[i]
+            else:
+                tmp = nums[i]
+            max_ = max(tmp,max_)
             
-        return max(max_left,max_right, max_l+max_r)
+        return max(max_left,max_right, max_)
