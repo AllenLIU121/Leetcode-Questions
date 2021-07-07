@@ -1,0 +1,56 @@
+# Simulate Path
+class Solution(object):
+    def spiralOrder(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: List[int]
+        """
+        if not matrix:
+            return list()
+        
+        rows,columns = len(matrix),len(matrix[0])
+        visited = [[False]*columns for _ in range(rows)]
+        total = rows * columns
+        order = [0] * total
+        direction = [[0,1],[1,0],[0,-1],[-1,0]]
+        row,column = 0,0
+        directionIndex = 0
+        for i in range(total):
+            order[i] = matrix[row][column]
+            visited[row][column] = True
+            row_next = row + direction[directionIndex][0]
+            column_next = column + direction[directionIndex][1]
+            if not (0<=row_next<rows and 0<=column_next<columns and not visited[row_next][column_next]):
+                directionIndex = (directionIndex+1) % 4
+            row += direction[directionIndex][0]
+            column += direction[directionIndex][1]
+        return order
+        
+        
+# Simulate Layer
+class Solution(object):
+    def spiralOrder(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: List[int]
+        """
+        if not matrix:
+            return list()
+
+        left, right = 0, len(matrix[0])-1
+        top, bottom = 0, len(matrix)-1
+        order = list()
+        while top<=bottom and left<=right:
+            for i in range(left,right+1):
+                order.append(matrix[top][i])
+            for j in range(top+1,bottom+1):
+                order.append(matrix[j][right])
+            if left<right and top<bottom:
+                for _i in range(right-1,left,-1):
+                    order.append(matrix[bottom][_i])
+                for _j in range(bottom,top,-1):
+                    order.append(matrix[_j][left])
+            
+            top, bottom, left, right = top+1, bottom-1, left+1, right-1
+                    
+        return order
