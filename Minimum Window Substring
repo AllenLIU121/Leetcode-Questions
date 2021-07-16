@@ -1,0 +1,34 @@
+# Sliding Window
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        window_freq = collections.defaultdict(int)
+        t_freq = collections.defaultdict(int)
+        for i in t:
+            t_freq[i] += 1
+
+        l,r = 0,0
+        start = 0
+        length = len(s) + 1
+        total_freq = 0
+        
+        while r<len(s):
+            c = s[r]
+            r += 1
+            if c in t_freq:
+                window_freq[c] += 1
+                if window_freq[c] == t_freq[c]:
+                    total_freq += 1
+                while total_freq == len(t_freq):
+                    if r-l < length:
+                        start = l
+                        length = r-l
+                    d = s[l]
+                    l += 1
+                    if d in t_freq:
+                        if window_freq[d] == t_freq[d]:
+                            total_freq -= 1
+                        window_freq[d] -= 1
+        if length == len(s)+1:
+            return ''
+        else:
+            return s[start:start+length]
